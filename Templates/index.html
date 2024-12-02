@@ -4,227 +4,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stress Level Prediction</title>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(120deg, #6a11cb, #2575fc);
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 900px;
-            margin: 50px auto;
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            transform: scale(1);
-            transition: transform 0.3s ease;
-        }
-        
-        .container:hover {
-            transform: scale(1.02);
-        }
-        
-        h1 {
-            text-align: center;
-            color: #4CAF50;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        label {
-            font-size: 1rem;
-            color: #555;
-            margin-bottom: 5px;
-        }
-        
-        input[type="number"] {
-            padding: 12px;
-            font-size: 1rem;
-            width: 100%;
-            border: 2px solid #ccc;
-            border-radius: 8px;
-            background-color: #fafafa;
-            outline: none;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        input[type="number"]:focus {
-            border-color: #4CAF50;
-            box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
-        }
-        
-        .button-group {
-            display: flex;
-            gap: 15px; /* Adds space between buttons */
-            justify-content: center;
-        }
-        
-        button {
-            background: linear-gradient(90deg, #ff7e5f, #feb47b);
-            color: white;
-            padding: 15px 25px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
-        }
-        
-        button:hover {
-            background: linear-gradient(90deg, #feb47b, #ff7e5f);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-            color: #333; /* Change color on hover */
-        }
-        
-        button:active {
-            transform: translateY(3px);
-            background: linear-gradient(90deg, #ff5722, #e91e63);
-            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3);
-            color: #fff; /* Change color on click */
-        }
-        
-        button::after {
-            content: '';
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background: rgba(255, 255, 255, 0.5);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            border-radius: 50%;
-            transition: transform 0.5s ease, opacity 0.5s ease;
-            pointer-events: none;
-        }
-        
-        button:active::after {
-            transform: translate(-50%, -50%) scale(4);
-            opacity: 0;
-        }
-        
-        /* Transition effect when form data is submitted or action is taken */
-        .container {
-            transition: transform 0.5s ease, box-shadow 0.5s ease;
-        }
-        
-        .container.active {
-            transform: scale(1.05);
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
-        }
-        
-        @media screen and (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-            .button-group {
-                flex-direction: column;
-            }
-        }
-        
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
     <div class="container">
-        <h1>Enter your details to predict stress level</h1>
-        <form action="/predict_stress_level" method="POST">
+        <h1>Enter your details to predict stress</h1>
+        <form action="/predict" method="POST">
+            
             <div class="form-group">
-                <label for="anxiety_level">Anxiety Level:</label>
-                <input type="number" id="anxiety_level" name="anxiety_level" required>
+                <label for="anxiety_level">Anxiety Level (0-21):</label>
+                <input type="number" id="anxiety_level" name="anxiety_level" min="0" max="21" required>
             </div>
+
             <div class="form-group">
-                <label for="self_esteem">Self Esteem:</label>
-                <input type="number" id="self_esteem" name="self_esteem" required>
+                <label for="self_esteem">Self Esteem (0-30):</label>
+                <input type="number" id="self_esteem" name="self_esteem" min="0" max="30" required>
             </div>
+
             <div class="form-group">
-                <label for="mental_health_history">Mental Health History:</label>
-                <input type="number" id="mental_health_history" name="mental_health_history" required>
+                <label for="mental_health_history">Mental Health History (0 or 1):</label>
+                <input type="number" id="mental_health_history" name="mental_health_history" min="0" max="1" required>
             </div>
+
             <div class="form-group">
-                <label for="depression">Depression:</label>
-                <input type="number" id="depression" name="depression" required>
+                <label for="depression">Depression (0-27):</label>
+                <input type="number" id="depression" name="depression" min="0" max="27" required>
             </div>
+
             <div class="form-group">
-                <label for="headache">Headache:</label>
-                <input type="number" id="headache" name="headache" required>
+                <label for="headache">Headache (0-5):</label>
+                <input type="number" id="headache" name="headache" min="0" max="5" required>
             </div>
+
             <div class="form-group">
-                <label for="blood_pressure">Blood Pressure:</label>
-                <input type="number" id="blood_pressure" name="blood_pressure" required>
+                <label for="blood_pressure">Blood Pressure (1-3):</label>
+                <input type="number" id="blood_pressure" name="blood_pressure" min="1" max="3" required>
             </div>
+
             <div class="form-group">
-                <label for="sleep_quality">Sleep Quality:</label>
-                <input type="number" id="sleep_quality" name="sleep_quality" required>
+                <label for="sleep_quality">Sleep Quality (0-5):</label>
+                <input type="number" id="sleep_quality" name="sleep_quality" min="0" max="5" required>
             </div>
+
             <div class="form-group">
-                <label for="breathing_problem">Breathing Problem:</label>
-                <input type="number" id="breathing_problem" name="breathing_problem" required>
+                <label for="breathing_problem">Breathing Problem (0-5):</label>
+                <input type="number" id="breathing_problem" name="breathing_problem" min="0" max="5" required>
             </div>
+
             <div class="form-group">
-                <label for="noise_level">Noise Level:</label>
-                <input type="number" id="noise_level" name="noise_level" required>
+                <label for="noise_level">Noise Level (0-5):</label>
+                <input type="number" id="noise_level" name="noise_level" min="0" max="5" required>
             </div>
+
             <div class="form-group">
-                <label for="living_conditions">Living Conditions:</label>
-                <input type="number" id="living_conditions" name="living_conditions" required>
+                <label for="living_conditions">Living Conditions (0-5):</label>
+                <input type="number" id="living_conditions" name="living_conditions" min="0" max="5" required>
             </div>
+
             <div class="form-group">
-                <label for="safety">Safety:</label>
-                <input type="number" id="safety" name="safety" required>
+                <label for="safety">Safety (0-5):</label>
+                <input type="number" id="safety" name="safety" min="0" max="5" required>
             </div>
+
             <div class="form-group">
-                <label for="basic_needs">Basic Needs:</label>
-                <input type="number" id="basic_needs" name="basic_needs" required>
+                <label for="basic_needs">Basic Needs (0-5):</label>
+                <input type="number" id="basic_needs" name="basic_needs" min="0" max="5" required>
             </div>
+
             <div class="form-group">
-                <label for="academic_performance">Academic Performance:</label>
-                <input type="number" id="academic_performance" name="academic_performance" required>
+                <label for="academic_performance">Academic Performance (0-5):</label>
+                <input type="number" id="academic_performance" name="academic_performance" min="0" max="5" required>
             </div>
+
             <div class="form-group">
-                <label for="study_load">Study Load:</label>
-                <input type="number" id="study_load" name="study_load" required>
+                <label for="study_load">Study Load (0-5):</label>
+                <input type="number" id="study_load" name="study_load" min="0" max="5" required>
             </div>
+
             <div class="form-group">
-                <label for="teacher_student_relationship">Teacher-Student Relationship:</label>
-                <input type="number" id="teacher_student_relationship" name="teacher_student_relationship" required>
+                <label for="teacher_student_relationship">Teacher-Student Relationship (0-5):</label>
+                <input type="number" id="teacher_student_relationship" name="teacher_student_relationship" min="0" max="5" required>
             </div>
+
             <div class="form-group">
-                <label for="future_career_concerns">Future Career Concerns:</label>
-                <input type="number" id="future_career_concerns" name="future_career_concerns" required>
+                <label for="future_career_concerns">Future Career Concerns (0-5):</label>
+                <input type="number" id="future_career_concerns" name="future_career_concerns" min="0" max="5" required>
             </div>
+
             <div class="form-group">
-                <label for="social_support">Social Support:</label>
-                <input type="number" id="social_support" name="social_support" required>
+                <label for="social_support">Social Support (0-5):</label>
+                <input type="number" id="social_support" name="social_support" min="0" max="5" required>
             </div>
+
             <div class="form-group">
-                <label for="peer_pressure">Peer Pressure:</label>
-                <input type="number" id="peer_pressure" name="peer_pressure" required>
+                <label for="peer_pressure">Peer Pressure (0-5):</label>
+                <input type="number" id="peer_pressure" name="peer_pressure" min="0" max="5" required>
             </div>
+
             <div class="form-group">
-                <label for="extracurricular_activities">Extracurricular Activities:</label>
-                <input type="number" id="extracurricular_activities" name="extracurricular_activities" required>
+                <label for="extracurricular_activities">Extracurricular Activities (0-5):</label>
+                <input type="number" id="extracurricular_activities" name="extracurricular_activities" min="0" max="5" required>
             </div>
+
             <div class="form-group">
-                <label for="bullying">Bullying:</label>
-                <input type="number" id="bullying" name="bullying" required>
+                <label for="bullying">Bullying (0-5):</label>
+                <input type="number" id="bullying" name="bullying" min="0" max="5" required>
             </div>
-            <!-- Add remaining fields here -->
+
             <button type="submit">Submit</button>
         </form>
     </div>
