@@ -1,1 +1,31 @@
-<h1>Home Page</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .home-title { /* Added a dot before class name */
+            text-align: center;
+            font-size: 3rem;  /* Larger font size */
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(120deg, #ff7e5f, #feb47b);  /* Gradient background */
+            -webkit-background-clip: text;  /* Clips the gradient to the text */
+            background-clip: text;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);  /* Soft shadow for depth */
+            margin-bottom: 20px;
+            transition: transform 0.4s ease, color 0.3s ease;  /* Animation for smooth hover effect */
+        }
+        
+        .home-title:hover { /* Added a dot before class name */
+            transform: scale(1.1);  /* Slightly increases size on hover */
+            color: #4CAF50;  /* Changes color on hover */
+        }
+        
+     </style>
+</head>
+<body>
+    <h1 class="home-title">Home Page</h1> <!-- Added the class here -->
+</body>
+</html>
